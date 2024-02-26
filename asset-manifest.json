@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/react-gh-pages/static/css/main.33dfa47e.css",
+    "main.js": "/react-gh-pages/static/js/main.9eac962d.js",
+    "static/js/453.2a82e7ac.chunk.js": "/react-gh-pages/static/js/453.2a82e7ac.chunk.js",
+    "static/media/Irislogo.svg": "/react-gh-pages/static/media/Irislogo.adc15cb1e567f3c7bd6bd095e2fdfb80.svg",
+    "static/media/Group.svg": "/react-gh-pages/static/media/Group.617f619c867a1fcd8c6a7937356652ee.svg",
+    "static/media/welcome.svg": "/react-gh-pages/static/media/welcome.aefcbf29a4d458f1db5d87a697bb7f01.svg",
+    "static/media/Frame.svg": "/react-gh-pages/static/media/Frame.f3013301121126be69308fe740750f99.svg",
+    "index.html": "/react-gh-pages/index.html",
+    "static/media/Vector.svg": "/react-gh-pages/static/media/Vector.c0450002f12df92a31c6a8e3e76fb9a4.svg",
+    "main.33dfa47e.css.map": "/react-gh-pages/static/css/main.33dfa47e.css.map",
+    "main.9eac962d.js.map": "/react-gh-pages/static/js/main.9eac962d.js.map",
+    "453.2a82e7ac.chunk.js.map": "/react-gh-pages/static/js/453.2a82e7ac.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.33dfa47e.css",
+    "static/js/main.9eac962d.js"
+  ]
+}
