@@ -73,6 +73,7 @@ const Report = ( {userData, onLogout }) => {
           <span style={{ verticalAlign: "middle" }}>Logout</span>{" "}
         </button>
       </header>
+      {userData?.userDetails?.user_type==="agent"&&(<div> user has no permission to view</div>)}
       <div>
         <div className="lead-details">
           {userData?.chargerDetails?.length === 1 ? (
