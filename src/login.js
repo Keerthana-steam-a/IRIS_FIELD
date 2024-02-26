@@ -16,7 +16,7 @@ function Login({ onLogin }) {
     event.preventDefault();
     if (username.trim() !== "") {
       try {
-        const response = await fetch("http://localhost:8080/user", {
+        const response = await fetch("http://43.204.74.225:8080/user", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
