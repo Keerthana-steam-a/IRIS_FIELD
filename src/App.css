@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+body {
+  font-family: "IBM Plex Mono";
+}
+
+.App-header {
+  height: 68px;
+  width: auto;
+  background: #d83a41;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.login-box {
+  margin: 200px auto;
+  height: 223px;
+  padding: 20px;
+  width: 448px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: #eaeaea 1px;
+  box-shadow: 0px 0px 24px 0px #82828233;
+  text-align: center;
+}
+.welcome {
+  margin-top: 30px;
+}
+.input-container {
+  margin-top: 40px;
+  margin-bottom: 10px;
+  height: 42px;
+}
+
+.input-container input {
+  width: 368px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f1f8fe;
+}
+
+.login {
+  width: 385px;
+  padding: 10px;
+  background-color: #d83a41;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login:hover {
+  background-color: #c62828;
+}
+.frame-image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.logout {
+  padding: 10px;
+  background-color: #ffffff;
+  color: #d83a41;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lead-details {
+  display: flex;
+  padding: 10px;
+  height: 86px;
+  background-color: #f2f2f2;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.download-button {
+  margin-top: 10px;
+  height: 34px;
+  width: 150px;
+  padding: 10px;
+  background-color: #d83a41;
+  color: #ffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lead-details button:hover {
+  background-color: #c62828;
+}
+
+.report-div {
+  margin-top: 30px;
+  background: #f2f2f2;
+  height: 778px;
+  position: absolute;
+  top: 182px;
+  left: 2px;
+}
+
+
+
