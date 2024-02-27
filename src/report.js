@@ -32,7 +32,18 @@ const Report = ({ userData, onLogout }) => {
             oem_name: chargerDetail.oem_name,
             test_case_id: index + 1,
             test_case_name: testCase.name,
-            test_case_result: testCase.successRatio,
+            test_case_result:
+              testCase?.successRatio === "a"
+                ? "Success on first time"
+                : testCase?.successRatio === "b"
+                ? "Success on retry"
+                : testCase?.successRatio === "c"
+                ? "Partial Success"
+                : testCase?.successRatio === "d"
+                ? "Failed"
+                : testCase?.successRatio === "e"
+                ? "Not Applicable"
+                : "--",
           };
           accumulator.push(rowData);
         });
