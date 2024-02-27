@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
 body {
   font-family: "IBM Plex Mono";
   color: #666666;
-;
 }
 
 .App-header {
@@ -26,9 +26,11 @@ body {
   box-shadow: 0px 0px 24px 0px #82828233;
   text-align: center;
 }
+
 .welcome {
   margin-top: 30px;
 }
+
 .input-container {
   margin-top: 40px;
   margin-bottom: 10px;
@@ -56,6 +58,7 @@ body {
 .login:hover {
   background-color: #c62828;
 }
+
 .frame-image {
   position: absolute;
   bottom: 0;
@@ -79,6 +82,7 @@ body {
   justify-content: space-between;
   margin-top: 20px;
 }
+
 .download-button {
   margin-top: 10px;
   height: 34px;
@@ -103,6 +107,7 @@ body {
   top: 182px;
   left: 2px;
 }
+
 .centered-div {
   width: 580px;
   height: 117px;
@@ -113,18 +118,20 @@ body {
   background: #f2f2f2;
   position: absolute;
   padding: 10px;
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.content-wrapper{
+
+.content-wrapper {
   margin-left: 20px;
 }
+
 .form-div {
   width: 580px;
-  max-height: 450px; 
-  overflow-y: auto; 
-  top: 62%; 
+  max-height: 450px;
+  overflow-y: auto;
+  top: 62%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 20px;
@@ -133,11 +140,9 @@ body {
   padding: 10px;
 }
 
-
 .option-buttons {
   display: flex;
-    justify-content: space-between; 
-
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -198,7 +203,78 @@ body {
   border-radius: 8px;
   cursor: pointer;
   position: absolute;
-margin-right: 420px;
+  margin-right: 420px;
 }
 
+.tooltip {
+  position: absolute;
+  background-color: #d83a41;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  max-width: 200px;
+}
+
+.tooltip:before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #dddddd transparent transparent transparent;
+}
+
+/* Media Queries */
+
+/* For screens smaller than 768px */
+@media screen and (max-width: 767px) {
+  .login-box {
+    margin: 100px auto;
+    width: 90%;
+  }
+
+  .input-container input {
+    width: calc(100% - 20px);
+  }
+
+  .frame-image {
+    display: none;
+  }
+
+  .report-div {
+    height: auto;
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+
+  .centered-div,
+  .form-div {
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+  td.sticky-cell {
+    position: sticky; /* Reset position for smaller screens */
+    left: 0;
+    z-index: 1;
+    background: #F2F2F2; /* Reset background color */
+    padding: 5px; /* Adjust padding for smaller screens */
+  }
+table.report{
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+@media screen and (max-width: 767px) {
+
+  table.report{
+  border-collapse: collapse;
+  white-space:inherit;
+}
+}
 

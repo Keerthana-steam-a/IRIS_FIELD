@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import Irislogo from "./assets/Irislogo.svg";
 import vector from "./assets/Vector.svg";
 import Group from "./assets/Group.svg";
 import * as XLSX from "xlsx";
 
-const Report = ( {userData, onLogout }) => {
-  console.log("usedata",userData)
+const Report = ({ userData, onLogout }) => {
+  console.log("usedata", userData);
   let data;
- if (userData?.userDetails?.user_type === "lead") {
-    data = userData.chargerDetails[0]?.test_cases;
-  } else if (userData?.userDetails?.user_type === "assurance") {
+  // if (userData?.userDetails?.user_type === "lead") {
+  //   data = userData.chargerDetails[0]?.test_cases;
+  // } else if (userData?.userDetails?.user_type === "assurance") {
     data = [];
     userData?.chargerDetails?.forEach((chargerDetail) => {
       if (chargerDetail.test_cases) {
         data.push(...chargerDetail.test_cases);
       }
     });
-  }
+  // }
 
   const downloadExcel = () => {
     const data = userData?.chargerDetails.reduce(
@@ -61,7 +62,21 @@ const Report = ( {userData, onLogout }) => {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   };
+ const [tooltipContent, setTooltipContent] = useState("");
+ const [showTooltip, setShowTooltip] = useState(false);
+ const [currentSite, setCurrentSite] = useState("");
+ const [currentSuccessRatio, setCurrentSuccessRatio] = useState("");
 
+ const handleTooltipHover = (site, successRatio, reason) => {
+   setCurrentSite(site);
+   setCurrentSuccessRatio(successRatio);
+   setTooltipContent(reason);
+   setShowTooltip(true);
+ };
+
+ const handleTooltipLeave = () => {
+   setShowTooltip(false);
+ };
   return (
     <div>
       <header className="App-header">
@@ -108,134 +123,85 @@ const Report = ( {userData, onLogout }) => {
             right: 0,
           }}
         >
-          {userData?.chargerDetails?.length === 1 ? (
+          <div style={{ overflowX: "auto", overflowY: "auto" }}>
             <table
-              style={{
-                borderCollapse: "collapse",
-                margin: "20px",
-                whiteSpace: "nowrap",
-              }}
+            className="report"
             >
-              <tr style={{ background: "#F2F2F2", height: "67px" }}>
-                {data.map((item, index) => (
-                  <th key={index} style={{ padding: "10px" }}>
-                    {item.name}
-                  </th>
-                ))}
-              </tr>
-
-              <tr style={{ background: "#FFFFFF", height: "67px" }}>
-                {data.map((item, index) => (
-                  <td
-                    key={index}
+              <thead>
+                <tr
+                  style={{
+                    background: "#F2F2F2",
+                    height: "67px",
+                    position: "sticky",
+                    top: "0",
+                    zIndex: "2",
+                  }}
+                >
+                  <th
                     style={{
-                      color: "white",
                       padding: "10px",
-                      backgroundColor:
-                        item.successRatio === "a"
-                          ? "#62BDFF"
-                          : item.successRatio === "b"
-                          ? "#46D766"
-                          : item.successRatio === "c"
-                          ? "#FFB800"
-                          : item.successRatio === "d"
-                          ? "#FF4E4E"
-                          : item.successRatio === "e"
-                          ? "#A9A9A9"
-                          : "#FFB800",
-                    }}
-                  >
-                    {item.successRatio}
-                  </td>
-                ))}
-              </tr>
-            </table>
-          ) : (
-            <div style={{ overflowX: "auto", overflowY: "auto" }}>
-              <table
-                style={{
-                  whiteSpace: "nowrap",
-                  borderCollapse: "collapse",
-                }}
-              >
-                <thead>
-                  <tr
-                    style={{
-                      background: "#F2F2F2",
-                      height: "67px",
                       position: "sticky",
-                      top: "0",
+                      left: "0",
                       zIndex: "2",
                     }}
                   >
-                    <th
-                      style={{
-                        padding: "10px",
-                        position: "sticky",
-                        left: "0",
-                        zIndex: "2",
-                      }}
-                    >
-                      Sites
-                    </th>
-                    {userData?.chargerDetails[0]?.test_cases.map(
-                      (testCase, index) => (
-                        <th
-                          key={index}
-                          style={{
-                            padding: "10px",
-                            position: "sticky",
-                            top: "0",
-                            zIndex: "1",
-                          }}
-                        >
-                          {testCase.name}
-                        </th>
-                      )
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {userData?.chargerDetails.map((chargerDetail, index) => (
-                    <tr
-                      key={index}
-                      style={{
-                        backgroundColor:
-                          index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
-                        height: "67px",
-                      }}
-                    >
-                      <td
+                    Sites
+                  </th>
+                  {userData?.chargerDetails[0]?.test_cases.map(
+                    (testCase, index) => (
+                      <th
+                        key={index}
                         style={{
                           padding: "10px",
                           position: "sticky",
-                          left: "0",
+                          top: "0",
                           zIndex: "1",
-                          background: "#F2F2F2",
                         }}
                       >
-                        {chargerDetail.location_name}
-                      </td>
-                      {chargerDetail.test_cases.map((testCase, idx) => (
-                        <td
-                          key={idx}
-                          style={{
-                            color: "white",
-                            padding: "10px",
-                            backgroundColor:
-                              testCase.successRatio === "a"
-                                ? "#62BDFF"
-                                : testCase.successRatio === "b"
-                                ? "#46D766"
-                                : testCase.successRatio === "c"
-                                ? "#FFB800"
-                                : testCase.successRatio === "d"
-                                ? "#FF4E4E"
-                                : testCase.successRatio === "e"
-                                ? "#A9A9A9"
-                                : "#46D766",
-                          }}
-                        >
+                        {testCase.name}
+                      </th>
+                    )
+                  )}
+                </tr>
+              </thead>
+              <tbody>
+                {userData?.chargerDetails.map((chargerDetail, index) => (
+                  <tr
+                    key={index}
+                    style={{
+                      backgroundColor: index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                      height: "67px",
+                    }}
+                  >
+                    <td
+                      className="sticky-cell"
+                      
+                    >
+                      {chargerDetail.location_name
+                        ? chargerDetail?.location_name
+                        : userData?.stationDetails?.location_name}
+                    </td>
+                    {chargerDetail.test_cases.map((testCase, idx) => (
+                      <td
+                        key={idx}
+                        style={{
+                          color: "white",
+                          padding: "10px",
+                          backgroundColor:
+                            testCase.successRatio === "a"
+                              ? "#62BDFF"
+                              : testCase.successRatio === "b"
+                              ? "#46D766"
+                              : testCase.successRatio === "c"
+                              ? "#FFB800"
+                              : testCase.successRatio === "d"
+                              ? "#FF4E4E"
+                              : testCase.successRatio === "e"
+                              ? "#A9A9A9"
+                              : "#46D766",
+                        }}
+                      >
+                        <div className="success-ratio-container">
                           {testCase?.successRatio === "a"
                             ? "Success on first time"
                             : testCase?.successRatio === "b"
@@ -247,14 +213,34 @@ const Report = ( {userData, onLogout }) => {
                             : testCase?.successRatio === "e"
                             ? "Not Applicable"
                             : "--"}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                          {/* Tooltip icon */}
+                          <div
+                            className="tooltip-icon"
+                            onMouseEnter={() =>
+                              handleTooltipHover(
+                                chargerDetail.location_name,
+                                testCase.name,
+                                testCase.reason
+                              )
+                            }
+                            onMouseLeave={handleTooltipLeave}
+                          >
+                            <AiOutlineInfoCircle />
+                            {/* Tooltip content */}
+                            {showTooltip &&
+                              currentSite === chargerDetail.location_name &&
+                              currentSuccessRatio === testCase.name && (
+                                <div className="tooltip">{tooltipContent}</div>
+                              )}
+                          </div>
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
