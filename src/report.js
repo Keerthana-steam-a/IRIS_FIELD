@@ -8,10 +8,9 @@ import * as XLSX from "xlsx";
 const Report = ( {userData, onLogout }) => {
   console.log("usedata",userData)
   let data;
-
-  if (userData?.chargerDetails?.length === 1) {
+ if (userData?.userDetails?.user_type === "lead") {
     data = userData.chargerDetails[0]?.test_cases;
-  } else {
+  } else if (userData?.userDetails?.user_type === "assurance") {
     data = [];
     userData?.chargerDetails?.forEach((chargerDetail) => {
       if (chargerDetail.test_cases) {
@@ -28,9 +27,9 @@ const Report = ( {userData, onLogout }) => {
             id: chargerDetail.id,
             station_id: chargerDetail.station_id,
             cp_id: chargerDetail.cp_id,
-            test_case_id: index + 1, // Assuming you want to include a test case ID
             location_name: chargerDetail.location_name,
             oem_name: chargerDetail.oem_name,
+            test_case_id: index + 1,
             test_case_name: testCase.name,
             test_case_result: testCase.successRatio,
           };
@@ -73,7 +72,7 @@ const Report = ( {userData, onLogout }) => {
           <span style={{ verticalAlign: "middle" }}>Logout</span>{" "}
         </button>
       </header>
-      {userData?.userDetails?.user_type==="agent"&&(<div> user has no permission to view</div>)}
+      
       <div>
         <div className="lead-details">
           {userData?.chargerDetails?.length === 1 ? (

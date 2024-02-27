@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import BrowserRouter and Routes
 import "./App.css";
 import Login from "./login";
 import Report from "./report";
+import Agent from "./agent";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,17 +16,32 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    // window.location.href = "/login"; 
+    // window.location.href = "/login";
   };
 
   return (
-    <div className="App">
-      {isLoggedIn ? (
-        <Report userData={userData} onLogout={handleLogout} />
-      ) : (
-        <Login onLogin={handleLogin} />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        {/* Render Report or Agent component based on isLoggedIn and user type */}
+        {isLoggedIn ? (
+          <>
+            {userData?.userDetails?.user_type === "agent" ? (
+              <Route
+                path="/"
+                element={<Agent userData={userData} onLogout={handleLogout} />}
+              />
+            ) : (
+              <Route
+                path="/"
+                element={<Report userData={userData} onLogout={handleLogout} />}
+              />
+            )}
+          </>
+        ) : (
+          <Route path="/" element={<Login onLogin={handleLogin} />} />
+        )}
+      </Routes>
+    </Router>
   );
 }
 

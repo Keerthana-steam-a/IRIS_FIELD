@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 body {
   font-family: "IBM Plex Mono";
 }
@@ -101,6 +101,37 @@ body {
   top: 182px;
   left: 2px;
 }
+.centered-div {
+  width: 580px;
+  height: 117px;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background: #f2f2f2;
+  position: absolute;
+  padding: 10px;
+  display: flex; /* Make it a flex container */
+  justify-content: space-between; /* Align items with space between */
+  align-items: center; /* Center vertically */
+}
+.content-wrapper{
+  margin-left: 20px;
+}
+.form-div {
+  width: 580px;
+  max-height: 500px; /* Set a maximum height to limit excessive scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  top: 65%; /* Adjust top position */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background: #f2f2f2;
+  position: fixed;
+  padding: 10px;
+}
 
 
+.form{
 
+}
