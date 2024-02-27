@@ -9,16 +9,12 @@ import * as XLSX from "xlsx";
 const Report = ({ userData, onLogout }) => {
   console.log("usedata", userData);
   let data;
-  // if (userData?.userDetails?.user_type === "lead") {
-  //   data = userData.chargerDetails[0]?.test_cases;
-  // } else if (userData?.userDetails?.user_type === "assurance") {
     data = [];
     userData?.chargerDetails?.forEach((chargerDetail) => {
       if (chargerDetail.test_cases) {
         data.push(...chargerDetail.test_cases);
       }
     });
-  // }
 
   const downloadExcel = () => {
     const data = userData?.chargerDetails.reduce(
@@ -28,7 +24,7 @@ const Report = ({ userData, onLogout }) => {
             id: chargerDetail.id,
             station_id: chargerDetail.station_id,
             cp_id: chargerDetail.cp_id,
-            location_name: chargerDetail.location_name,
+            location_name: userData?.stationDetails?.location_name,
             oem_name: chargerDetail.oem_name,
             test_case_id: index + 1,
             test_case_name: testCase.name,
