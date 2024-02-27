@@ -115,65 +115,67 @@ const Agent = ({ userData, onLogout }) => {
           <span style={{ verticalAlign: "middle" }}>Logout</span>{" "}
         </button>
       </header>
-      <div className="centered-div">
-        <div className="content-wrapper">
-          <p>Site Agent: {userData?.userDetails?.username}</p>
-          <p>Site: {userData?.stationDetails?.location_name}</p>
-          <p>CPID: {userData?.chargerDetails?.cp_id}</p>
+      <div>
+        <div className="centered-div">
+          <div className="content-wrapper">
+            <p>Site Agent: {userData?.userDetails?.username}</p>
+            <p>Site: {userData?.stationDetails?.location_name}</p>
+            <p>CPID: {userData?.chargerDetails?.cp_id}</p>
+          </div>
+          <button
+            type="submit"
+            className="download-button"
+            style={{ marginRight: "20px", marginTop: "-60px" }}
+          >
+            <img
+              src={vector}
+              style={{ verticalAlign: "middle", marginRight: "10px" }}
+              alt="Logo 2"
+            />
+            <span style={{ verticalAlign: "middle" }}>Download Script</span>{" "}
+          </button>
+        </div>
+        <div className="form-div">
+          <p style={{ marginLeft: "20px" }}>Testcases</p>
+          <div className="form">
+            {userData?.chargerDetails?.test_cases.map((testCase, index) => (
+              <div key={index} className="test-case-container">
+                <h3>
+                  {index + 1}. {testCase.name}
+                </h3>
+                <div className="option-buttons">
+                  {createOptionButtons(testCase.name)}
+                </div>
+                {inputValues[testCase.name] !== undefined && (
+                  <div className="input-wrapper">
+                    <input
+                      className="reason-box"
+                      type="text"
+                      value={inputValues[testCase.name]}
+                      onChange={(e) =>
+                        handleInputChange(testCase.name, e.target.value)
+                      }
+                      placeholder="Enter reason..."
+                      style={{ marginBottom: "10px", paddingRight: "40px" }}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
         <button
-          type="submit"
-          className="download-button"
-          style={{ marginRight: "20px", marginTop: "-60px" }}
+          className="save-button"
+          onClick={() => handleSave()}
+          style={{
+            position: "absolute",
+            right: "20px",
+            bottom: "20px",
+          }}
         >
-          <img
-            src={vector}
-            style={{ verticalAlign: "middle", marginRight: "10px" }}
-            alt="Logo 2"
-          />
-          <span style={{ verticalAlign: "middle" }}>Download Script</span>{" "}
+          Save
         </button>
       </div>
-      <div className="form-div">
-        <p style={{ marginLeft: "20px" }}>Testcases</p>
-        <div className="form">
-          {userData?.chargerDetails?.test_cases.map((testCase, index) => (
-            <div key={index} className="test-case-container">
-              <h3>
-                {index + 1}. {testCase.name}
-              </h3>
-              <div className="option-buttons">
-                {createOptionButtons(testCase.name)}
-              </div>
-              {inputValues[testCase.name] !== undefined && (
-                <div className="input-wrapper">
-                  <input
-                    className="reason-box"
-                    type="text"
-                    value={inputValues[testCase.name]}
-                    onChange={(e) =>
-                      handleInputChange(testCase.name, e.target.value)
-                    }
-                    placeholder="Enter reason..."
-                    style={{ marginBottom: "10px", paddingRight: "40px" }}
-                  />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-      <button
-        className="save-button"
-        onClick={() => handleSave()}
-        style={{
-          position: "absolute",
-          right: "20px",
-          bottom: "20px",
-        }}
-      >
-        Save
-      </button>
     </div>
   );
 };

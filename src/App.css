@@ -109,14 +109,11 @@ body {
 }
 
 .centered-div {
+  margin: 20px auto;
   width: 580px;
   height: 117px;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 20px;
   background: #f2f2f2;
-  position: absolute;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -128,15 +125,12 @@ body {
 }
 
 .form-div {
-  width: 580px;
-  max-height: 450px;
+  margin: 20px auto;
+  max-width: 580px;
+  max-height: 550px;
   overflow-y: auto;
-  top: 62%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 20px;
   background: #f2f2f2;
-  position: fixed;
   padding: 10px;
 }
 
@@ -165,23 +159,23 @@ body {
 }
 
 .Success-on-first-time {
-  background: #62BDFF;
+  background: #62bdff;
 }
 
 .Success-on-retry {
-  background: #46D766;
+  background: #46d766;
 }
 
 .Partial-Success {
-  background: #FFB800;
+  background: #ffb800;
 }
 
 .Failed {
-  background: #FF4E4E;
+  background: #ff4e4e;
 }
 
 .Not-Applicable {
-  background: #A9A9A9;
+  background: #a9a9a9;
 }
 
 .reason-box {
@@ -202,7 +196,7 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  position: absolute;
+  position: fixed;
   margin-right: 420px;
 }
 
@@ -218,7 +212,7 @@ body {
 }
 
 .tooltip:before {
-  content: '';
+  content: "";
   position: absolute;
   top: -10px;
   left: 50%;
@@ -259,22 +253,20 @@ body {
     transform: translateX(-50%);
   }
 }
-  td.sticky-cell {
-    position: sticky; /* Reset position for smaller screens */
-    left: 0;
-    z-index: 1;
-    background: #F2F2F2; /* Reset background color */
-    padding: 5px; /* Adjust padding for smaller screens */
-  }
-table.report{
+td.sticky-cell {
+  position: sticky; /* Reset position for smaller screens */
+  left: 0;
+  z-index: 1;
+  background: #f2f2f2; /* Reset background color */
+  padding: 5px; /* Adjust padding for smaller screens */
+}
+table.report {
   border-collapse: collapse;
   white-space: nowrap;
 }
 @media screen and (max-width: 767px) {
-
-  table.report{
-  border-collapse: collapse;
-  white-space:inherit;
+  table.report {
+    border-collapse: collapse;
+    white-space: inherit;
+  }
 }
-}
-
