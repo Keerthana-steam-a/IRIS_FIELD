@@ -72,7 +72,7 @@ const Report = ( {userData, onLogout }) => {
           <span style={{ verticalAlign: "middle" }}>Logout</span>{" "}
         </button>
       </header>
-      
+
       <div>
         <div className="lead-details">
           {userData?.chargerDetails?.length === 1 ? (
@@ -132,15 +132,15 @@ const Report = ( {userData, onLogout }) => {
                       color: "white",
                       padding: "10px",
                       backgroundColor:
-                        item.successRatio === "Success on first time"
+                        item.successRatio === "a"
                           ? "#62BDFF"
-                          : item.successRatio === "Success on retry"
+                          : item.successRatio === "b"
                           ? "#46D766"
-                          : item.successRatio === "Partial Success"
+                          : item.successRatio === "c"
                           ? "#FFB800"
-                          : item.successRatio === "Failed"
+                          : item.successRatio === "d"
                           ? "#FF4E4E"
-                          : item.successRatio === "Not Applicable"
+                          : item.successRatio === "e"
                           ? "#A9A9A9"
                           : "#FFB800",
                     }}
@@ -190,64 +190,67 @@ const Report = ( {userData, onLogout }) => {
                           }}
                         >
                           {testCase.name}
-                          <br />
-                          {testCase.successRatio}{" "}
                         </th>
                       )
                     )}
                   </tr>
                 </thead>
                 <tbody>
-                  {userData?.chargerDetails.map(
-                    (chargerDetail, index) => (
-                      <tr
-                        key={index}
+                  {userData?.chargerDetails.map((chargerDetail, index) => (
+                    <tr
+                      key={index}
+                      style={{
+                        backgroundColor:
+                          index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
+                        height: "67px",
+                      }}
+                    >
+                      <td
                         style={{
-                          backgroundColor:
-                            index % 2 === 0 ? "#FFFFFF" : "#F2F2F2",
-                          height: "67px",
+                          padding: "10px",
+                          position: "sticky",
+                          left: "0",
+                          zIndex: "1",
+                          background: "#F2F2F2",
                         }}
                       >
+                        {chargerDetail.location_name}
+                      </td>
+                      {chargerDetail.test_cases.map((testCase, idx) => (
                         <td
+                          key={idx}
                           style={{
+                            color: "white",
                             padding: "10px",
-                            position: "sticky",
-                            left: "0",
-                            zIndex: "1",
-                            background: "#F2F2F2",
+                            backgroundColor:
+                              testCase.successRatio === "a"
+                                ? "#62BDFF"
+                                : testCase.successRatio === "b"
+                                ? "#46D766"
+                                : testCase.successRatio === "c"
+                                ? "#FFB800"
+                                : testCase.successRatio === "d"
+                                ? "#FF4E4E"
+                                : testCase.successRatio === "e"
+                                ? "#A9A9A9"
+                                : "#46D766",
                           }}
                         >
-                          {chargerDetail.location_name}
+                          {testCase?.successRatio === "a"
+                            ? "Success on first time"
+                            : testCase?.successRatio === "b"
+                            ? "Success on retry"
+                            : testCase?.successRatio === "c"
+                            ? "Partial Success"
+                            : testCase?.successRatio === "d"
+                            ? "Failed"
+                            : testCase?.successRatio === "e"
+                            ? "Not Applicable"
+                            : "--"}
                         </td>
-                        {chargerDetail.test_cases.map((testCase, idx) => (
-                          <td
-                            key={idx}
-                            style={{
-                              color: "white",
-                              padding: "10px",
-                              backgroundColor:
-                                testCase.successRatio ===
-                                "Success on first time"
-                                  ? "#62BDFF"
-                                  : testCase.successRatio === "Success on retry"
-                                  ? "#46D766"
-                                  : testCase.successRatio === "Partial Success"
-                                  ? "#FFB800"
-                                  : testCase.successRatio === "Failed"
-                                  ? "#FF4E4E"
-                                  : testCase.successRatio === "Not Applicable"
-                                  ? "#A9A9A9"
-                                  : "#46D766",
-                            }}
-                          >
-                            {testCase?.successRatio
-                              ? testCase?.successRatio
-                              : "--"}
-                          </td>
-                        ))}
-                      </tr>
-                    )
-                  )}
+                      ))}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
