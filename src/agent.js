@@ -4,11 +4,21 @@ import Irislogo from "./assets/Irislogo.svg";
 import Group from "./assets/Group.svg";
 
 const Agent = ({ userData, onLogout }) => {
-  // State to manage selected options and corresponding input values for each test case
   const [selectedOptions, setSelectedOptions] = useState({});
   const [inputValues, setInputValues] = useState({});
+    const [header, setHeader] = useState(null);
+    useEffect(() => {
+      const fetchData = async () => {
+        const response = await fetch("http://localhost:8080/");
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const jsonData = await response.json();
+        setHeader(jsonData);
+      };
 
-  // Effect to set initial selected options and input values from userData
+      fetchData();
+    }, []);
   useEffect(() => {
     if (
       userData &&
@@ -28,21 +38,18 @@ const Agent = ({ userData, onLogout }) => {
     }
   }, [userData]);
 
-  // Function to handle option selection
   const handleOptionSelect = (testCaseName, option) => {
     setSelectedOptions({
       ...selectedOptions,
       [testCaseName]: option,
     });
 
-    // If the selected option is not "Success on first time", show the input box
     if (option !== "Success on first time") {
       setInputValues({
         ...inputValues,
         [testCaseName]: "",
       });
     } else {
-      // If the selected option is "Success on first time", hide the input box
       setInputValues({
         ...inputValues,
         [testCaseName]: undefined,
@@ -50,7 +57,6 @@ const Agent = ({ userData, onLogout }) => {
     }
   };
 
-  // Function to handle input change
   const handleInputChange = (testCaseName, value) => {
     setInputValues({
       ...inputValues,
@@ -58,21 +64,20 @@ const Agent = ({ userData, onLogout }) => {
     });
   };
 
-  // Function to handle saving data to API
 const handleSave = () => {
-  const dataToSend = {
-    cp_id: userData?.chargerDetails?.cp_id,
-    test_cases: userData?.chargerDetails?.test_cases.map((testCase) => ({
-      name: testCase.name,
-      successRatio: selectedOptions[testCase.name],
-      reason:
-        selectedOptions[testCase.name] !== "Success on first time"
-          ? inputValues[testCase.name]
-          : "",
-    })),
-  };
+const dataToSend = {
+  cp_id: userData?.chargerDetails?.cp_id,
+  test_cases: header?.test_case.map((headerItem) => ({
+    name: headerItem.name,
+    successRatio: selectedOptions[headerItem.name],
+    reason:
+      selectedOptions[headerItem.name] !== "Success on first time"
+        ? inputValues[headerItem.name]
+        : "",
+  })),
+};
 
-  // Send data to API using fetch or your preferred method
+
   fetch("http://43.204.74.225:8080/status", {
     method: "PATCH",
     headers: {
@@ -83,18 +88,12 @@ const handleSave = () => {
     .then((response) => response.json())
     .then((data) => {
       console.log("Success:", data);
-      // Handle success response from API
     })
     .catch((error) => {
       console.error("Error:", error);
-      // Handle error response from API
     });
 };
 
-  // Function to create options as buttons
-  // Function to create options as buttons
-  // Function to create options as buttons
-  // Function to create options as buttons
   const createOptionButtons = (testCaseName) => {
     const options = [
       {
@@ -154,30 +153,31 @@ const handleSave = () => {
         <div className="form-div">
           <p style={{ marginLeft: "20px" }}>Testcases</p>
           <div className="form">
-            {userData?.chargerDetails?.test_cases.map((testCase, index) => (
-              <div key={index} className="test-case-container">
-                <h3>
-                  {index + 1}. {testCase.name}
-                </h3>
-                <div className="option-buttons">
-                  {createOptionButtons(testCase.name)}
-                </div>
-                {inputValues[testCase.name] !== undefined && (
-                  <div className="input-wrapper">
-                    <input
-                      className="reason-box"
-                      type="text"
-                      value={inputValues[testCase.name]}
-                      onChange={(e) =>
-                        handleInputChange(testCase.name, e.target.value)
-                      }
-                      placeholder="Enter reason..."
-                      style={{ marginBottom: "10px", paddingRight: "40px" }}
-                    />
+            {header &&
+              header.test_case.map((headerItem, index) => (
+                <div key={index} className="test-case-container">
+                  <h3>
+                    {index + 1}. {headerItem.name}
+                  </h3>
+                  <div className="option-buttons">
+                    {createOptionButtons(headerItem.name)}
                   </div>
-                )}
-              </div>
-            ))}
+                  {inputValues[headerItem.name] !== undefined && (
+                    <div className="input-wrapper">
+                      <input
+                        className="reason-box"
+                        type="text"
+                        value={inputValues[headerItem.name]}
+                        onChange={(e) =>
+                          handleInputChange(headerItem.name, e.target.value)
+                        }
+                        placeholder="Enter reason..."
+                        style={{ marginBottom: "10px", paddingRight: "40px" }}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
           </div>
         </div>
       </div>

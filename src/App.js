@@ -22,8 +22,8 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    // setUserData(null);
-        window.location.href = "/";
+    setUserData(null);
+   window.location.href = "/";
 
   };
 

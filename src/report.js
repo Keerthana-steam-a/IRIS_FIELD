@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Irislogo from "./assets/Irislogo.svg";
@@ -8,6 +8,19 @@ import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 
 const Report = ({ userData, onLogout }) => {
+    const [header, setHeader] = useState(null);
+    useEffect(() => {
+      const fetchData = async () => {
+        const response = await fetch("http://localhost:8080/");
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const jsonData = await response.json();
+        setHeader(jsonData);
+      };
+
+      fetchData();
+    }, []);
   console.log("usedata", userData);
   let data;
     data = [];
@@ -113,14 +126,17 @@ navigate("/add");  };
             </div>
           )}
           <div>
-            <button
-              type="button"
-              className="download-button"
-              style={{ marginRight: "10px" }}
-              onClick={handleAddTestcaseClick}
-            >
-              <span style={{ verticalAlign: "middle" }}>Add Testcase</span>
-            </button>
+            {userData?.userDetails?.user_type === "assurance" && (
+              <button
+                type="button"
+                className="download-button"
+                style={{ marginRight: "10px" }}
+                onClick={handleAddTestcaseClick}
+              >
+                <span style={{ verticalAlign: "middle" }}>Add Testcase</span>
+              </button>
+            )}
+
             <button
               type="submit"
               className="download-button"
@@ -167,8 +183,8 @@ navigate("/add");  };
                   >
                     Sites
                   </th>
-                  {userData?.chargerDetails[0]?.test_cases.map(
-                    (testCase, index) => (
+                  {header &&
+                    header?.test_case.map((testCase, index) => (
                       <th
                         key={index}
                         style={{
@@ -180,8 +196,7 @@ navigate("/add");  };
                       >
                         {testCase.name}
                       </th>
-                    )
-                  )}
+                    ))}
                 </tr>
               </thead>
               <tbody>
@@ -198,61 +213,75 @@ navigate("/add");  };
                         ? chargerDetail?.location_name
                         : userData?.stationDetails?.location_name}
                     </td>
-                    {chargerDetail.test_cases.map((testCase, idx) => (
-                      <td
-                        key={idx}
-                        style={{
-                          color: "white",
-                          padding: "10px",
-                          backgroundColor:
-                            testCase.successRatio === "a"
-                              ? "#62BDFF"
-                              : testCase.successRatio === "b"
-                              ? "#46D766"
-                              : testCase.successRatio === "c"
-                              ? "#FFB800"
-                              : testCase.successRatio === "d"
-                              ? "#FF4E4E"
-                              : testCase.successRatio === "e"
-                              ? "#A9A9A9"
-                              : "#46D766",
-                        }}
-                      >
-                        <div className="success-ratio-container">
-                          {testCase?.successRatio === "a"
-                            ? "Success on first time"
-                            : testCase?.successRatio === "b"
-                            ? "Success on retry"
-                            : testCase?.successRatio === "c"
-                            ? "Partial Success"
-                            : testCase?.successRatio === "d"
-                            ? "Failed"
-                            : testCase?.successRatio === "e"
-                            ? "Not Applicable"
-                            : "--"}
-                          {/* Tooltip icon */}
-                          <div
-                            className="tooltip-icon"
-                            onMouseEnter={() =>
-                              handleTooltipHover(
-                                chargerDetail.location_name,
-                                testCase.name,
-                                testCase.reason
-                              )
-                            }
-                            onMouseLeave={handleTooltipLeave}
+                    {header &&
+                      header.test_case.map((testCaseHeader, idx) => {
+                        const matchingTestCase = chargerDetail.test_cases.find(
+                          (testCase) => testCase.name === testCaseHeader.name
+                        );
+                        return (
+                          <td
+                            key={idx}
+                            style={{
+                              color: "white",
+                              padding: "10px",
+                              backgroundColor:
+                                matchingTestCase?.successRatio === "a"
+                                  ? "#62BDFF"
+                                  : matchingTestCase?.successRatio === "b"
+                                  ? "#46D766"
+                                  : matchingTestCase?.successRatio === "c"
+                                  ? "#FFB800"
+                                  : matchingTestCase?.successRatio === "d"
+                                  ? "#FF4E4E"
+                                  : matchingTestCase?.successRatio === "e"
+                                  ? "#A9A9A9"
+                                  : "#46D766",
+                            }}
                           >
-                            <AiOutlineInfoCircle />
-                            {/* Tooltip content */}
-                            {showTooltip &&
-                              currentSite === chargerDetail.location_name &&
-                              currentSuccessRatio === testCase.name && (
-                                <div className="tooltip">{tooltipContent}</div>
+                            <div className="success-ratio-container">
+                              {matchingTestCase && (
+                                <>
+                                  {matchingTestCase?.successRatio === "a"
+                                    ? "Success on first time"
+                                    : matchingTestCase?.successRatio === "b"
+                                    ? "Success on retry"
+                                    : matchingTestCase?.successRatio === "c"
+                                    ? "Partial Success"
+                                    : matchingTestCase?.successRatio === "d"
+                                    ? "Failed"
+                                    : matchingTestCase?.successRatio === "e"
+                                    ? "Not Applicable"
+                                    : "--"}
+                                  {/* Tooltip icon */}
+                                  <div
+                                    className="tooltip-icon"
+                                    onMouseEnter={() =>
+                                      handleTooltipHover(
+                                        chargerDetail.location_name,
+                                        matchingTestCase.name,
+                                        matchingTestCase.reason
+                                      )
+                                    }
+                                    onMouseLeave={handleTooltipLeave}
+                                  >
+                                    <AiOutlineInfoCircle />
+                                    {/* Tooltip content */}
+                                    {showTooltip &&
+                                      currentSite ===
+                                        chargerDetail.location_name &&
+                                      currentSuccessRatio ===
+                                        matchingTestCase.name && (
+                                        <div className="tooltip">
+                                          {tooltipContent}
+                                        </div>
+                                      )}
+                                  </div>
+                                </>
                               )}
-                          </div>
-                        </div>
-                      </td>
-                    ))}
+                            </div>
+                          </td>
+                        );
+                      })}
                   </tr>
                 ))}
               </tbody>
