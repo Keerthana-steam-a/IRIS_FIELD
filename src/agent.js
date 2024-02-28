@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import Irislogo from "./assets/Irislogo.svg";
-import vector from "./assets/Vector.svg";
 import Group from "./assets/Group.svg";
 
 const Agent = ({ userData, onLogout }) => {
@@ -145,16 +144,11 @@ const handleSave = () => {
             <p>CPID: {userData?.chargerDetails?.cp_id}</p>
           </div>
           <button
-            type="submit"
             className="download-button"
-            style={{ marginRight: "20px", marginTop: "-60px" }}
+            style={{ marginRight: "20px", marginTop: "70px" }}
+            onClick={() => handleSave()}
           >
-            <img
-              src={vector}
-              style={{ verticalAlign: "middle", marginRight: "10px" }}
-              alt="Logo 2"
-            />
-            <span style={{ verticalAlign: "middle" }}>Download Script</span>{" "}
+            Save
           </button>
         </div>
         <div className="form-div">
@@ -186,17 +180,6 @@ const handleSave = () => {
             ))}
           </div>
         </div>
-        <button
-          className="save-button"
-          onClick={() => handleSave()}
-          style={{
-            position: "absolute",
-            right: "20px",
-            bottom: "20px",
-          }}
-        >
-          Save
-        </button>
       </div>
     </div>
   );

@@ -270,3 +270,51 @@ table.report {
     white-space: inherit;
   }
 }
+
+.button-space {
+  justify-content: space-between;
+}
+.test-cases-container {
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.test-cases {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 18px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.button-container button {
+  height: 34px;
+  width: 150px;
+  padding: 10px;
+  background-color: #d83a41;
+  color: #ffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.test-cases button {
+  padding: 10px;
+  background-color: #d83a41;
+  color: #ffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.test-case-input {
+  width: 368px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f1f8fe;}

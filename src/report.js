@@ -84,6 +84,9 @@ const Report = ({ userData, onLogout }) => {
  const handleTooltipLeave = () => {
    setShowTooltip(false);
  };
+  const handleAddTestcaseClick = () => {
+    window.location.href = "/add";
+  };
   return (
     <div>
       <header className="App-header">
@@ -107,18 +110,28 @@ const Report = ({ userData, onLogout }) => {
               <p>Assurance Lead: {userData?.userDetails?.username}</p>
             </div>
           )}
-          <button
-            type="submit"
-            className="download-button"
-            onClick={downloadExcel}
-          >
-            <img
-              src={vector}
-              style={{ verticalAlign: "middle", marginRight: "10px" }}
-              alt="Logo 2"
-            />
-            <span style={{ verticalAlign: "middle" }}>Download</span>{" "}
-          </button>
+          <div>
+            <button
+              type="button"
+              className="download-button"
+              style={{ marginRight: "10px" }}
+              onClick={handleAddTestcaseClick}
+            >
+              <span style={{ verticalAlign: "middle" }}>Add Testcase</span>
+            </button>
+            <button
+              type="submit"
+              className="download-button"
+              onClick={downloadExcel}
+            >
+              <img
+                src={vector}
+                style={{ verticalAlign: "middle", marginRight: "10px" }}
+                alt="Logo 2"
+              />
+              <span style={{ verticalAlign: "middle" }}>Download</span>{" "}
+            </button>
+          </div>
         </div>
         <div
           className="report-div"
@@ -131,9 +144,7 @@ const Report = ({ userData, onLogout }) => {
           }}
         >
           <div style={{ overflowX: "auto", overflowY: "auto" }}>
-            <table
-            className="report"
-            >
+            <table className="report">
               <thead>
                 <tr
                   style={{
@@ -180,10 +191,7 @@ const Report = ({ userData, onLogout }) => {
                       height: "67px",
                     }}
                   >
-                    <td
-                      className="sticky-cell"
-                      
-                    >
+                    <td className="sticky-cell">
                       {chargerDetail.location_name
                         ? chargerDetail?.location_name
                         : userData?.stationDetails?.location_name}

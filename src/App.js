@@ -4,7 +4,7 @@ import "./App.css";
 import Login from "./login";
 import Report from "./report";
 import Agent from "./agent";
-
+import Add from "./add";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null); // State to store user data
@@ -16,30 +16,33 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    // window.location.href = "/login";
   };
-
+const handleBackButtonClick = () => {
+  setUserData(null);
+};
   return (
     <Router>
       <Routes>
-        {/* Render Report or Agent component based on isLoggedIn and user type */}
-        {isLoggedIn ? (
-          <>
-            {userData?.userDetails?.user_type === "agent" ? (
-              <Route
-                path="/"
-                element={<Agent userData={userData} onLogout={handleLogout} />}
-              />
+        <Route
+          path="/"
+          element={
+            !isLoggedIn ? (
+              <Login onLogin={handleLogin} />
             ) : (
-              <Route
-                path="/"
-                element={<Report userData={userData} onLogout={handleLogout} />}
-              />
-            )}
-          </>
-        ) : (
-          <Route path="/" element={<Login onLogin={handleLogin} />} />
-        )}
+              <>
+                {userData?.userDetails?.user_type === "agent" ? (
+                  <Agent userData={userData} onLogout={handleLogout} />
+                ) : (
+                  <Report userData={userData} onLogout={handleLogout} />
+                )}
+              </>
+            )
+          }
+        />
+        <Route
+          path="/add"
+          element={<Add handleBackButtonClick={handleBackButtonClick} />}
+        />
       </Routes>
     </Router>
   );
