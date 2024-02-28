@@ -1,25 +1,32 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import BrowserRouter and Routes
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import Login from "./login";
 import Report from "./report";
 import Agent from "./agent";
 import Add from "./add";
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null); // State to store user data
+  const [userData, setUserData] = useState(null);
 
   const handleLogin = (data) => {
     setIsLoggedIn(true);
-    setUserData(data); // Store user data
+    setUserData(data);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    // setUserData(null);
+        window.location.href = "/";
+
   };
-const handleBackButtonClick = () => {
-  setUserData(null);
-};
+
   return (
     <Router>
       <Routes>
@@ -29,20 +36,22 @@ const handleBackButtonClick = () => {
             !isLoggedIn ? (
               <Login onLogin={handleLogin} />
             ) : (
-              <>
-                {userData?.userDetails?.user_type === "agent" ? (
-                  <Agent userData={userData} onLogout={handleLogout} />
-                ) : (
-                  <Report userData={userData} onLogout={handleLogout} />
-                )}
-              </>
+              <Navigate to="/report" replace />
             )
           }
         />
         <Route
-          path="/add"
-          element={<Add handleBackButtonClick={handleBackButtonClick} />}
+          path="/report"
+          element={
+            isLoggedIn && userData?.userDetails?.user_type === "agent" ? (
+              <Agent userData={userData} onLogout={handleLogout} />
+            ) : (
+              <Report userData={userData} onLogout={handleLogout} />
+            )
+          }
         />
+       
+        <Route path="/add" element={ isLoggedIn &&<Add userData={userData} />} />
       </Routes>
     </Router>
   );

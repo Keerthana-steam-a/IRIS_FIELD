@@ -5,6 +5,7 @@ import Irislogo from "./assets/Irislogo.svg";
 import vector from "./assets/Vector.svg";
 import Group from "./assets/Group.svg";
 import * as XLSX from "xlsx";
+import { useNavigate } from "react-router-dom";
 
 const Report = ({ userData, onLogout }) => {
   console.log("usedata", userData);
@@ -84,9 +85,10 @@ const Report = ({ userData, onLogout }) => {
  const handleTooltipLeave = () => {
    setShowTooltip(false);
  };
+ const navigate = useNavigate();
+
   const handleAddTestcaseClick = () => {
-    window.location.href = "/add";
-  };
+navigate("/add");  };
   return (
     <div>
       <header className="App-header">

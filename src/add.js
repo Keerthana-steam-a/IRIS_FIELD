@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { IoMdArrowBack } from "react-icons/io";
 import Irislogo from "./assets/Irislogo.svg";
 import Group from "./assets/Group.svg";
 
-const Add = ({handleBackButtonClick}) => {
+const Add = ({ userData }) => {
   const [data, setData] = useState(null);
   const [newTestCase, setNewTestCase] = useState("");
+const navigate = useNavigate();
 
+  const handleBackButtonClick = () => {
+    if (userData?.userDetails?.user_type === "agent") {
+      navigate("/agent"); // Redirect to agent page
+    } else {
+      navigate("/report"); // Redirect to report page
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("http://localhost:8080/");
@@ -97,7 +107,7 @@ const Add = ({handleBackButtonClick}) => {
         <img src={Group} alt="Logo 2" />
         <img src={Irislogo} alt="Logo 1" />
         <button
-          type="submit"
+          type="button"
           className="logout"
           onClick={handleBackButtonClick}
         >
