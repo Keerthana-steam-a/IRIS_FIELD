@@ -262,7 +262,6 @@ td.sticky-cell {
 }
 table.report {
   border-collapse: collapse;
-  white-space: nowrap;
 }
 @media screen and (max-width: 767px) {
   table.report {
@@ -318,3 +317,7 @@ table.report {
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #f1f8fe;}
+
+.success-ratio-container{
+  width:165px
+}
