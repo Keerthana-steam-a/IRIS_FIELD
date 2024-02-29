@@ -263,7 +263,8 @@ navigate("/add");  };
                                     }
                                     onMouseLeave={handleTooltipLeave}
                                   >
-                                    <AiOutlineInfoCircle />
+                                   { matchingTestCase?.reason&&
+                                    <AiOutlineInfoCircle />}
                                     {showTooltip &&
                                       currentSite ===
                                         chargerDetail.location_name &&
