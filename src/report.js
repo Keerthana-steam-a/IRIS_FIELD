@@ -239,7 +239,7 @@ navigate("/add");  };
                             }}
                           >
                             <div className="success-ratio-container">
-                              {matchingTestCase && (
+                              {matchingTestCase ? (
                                 <>
                                   {matchingTestCase?.successRatio === "a"
                                     ? "Success on first time"
@@ -251,7 +251,7 @@ navigate("/add");  };
                                     ? "Failed"
                                     : matchingTestCase?.successRatio === "e"
                                     ? "Not Applicable"
-                                    : "--"}
+                                    : ""}
                                   <div
                                     className="tooltip-icon"
                                     onMouseEnter={() =>
@@ -275,6 +275,8 @@ navigate("/add");  };
                                       )}
                                   </div>
                                 </>
+                              ) : (
+                                <p style={{ color: "black" }}>--</p>
                               )}
                             </div>
                           </td>

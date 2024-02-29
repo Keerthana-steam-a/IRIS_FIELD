@@ -2,23 +2,24 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import Irislogo from "./assets/Irislogo.svg";
 import Group from "./assets/Group.svg";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Agent = ({ userData, onLogout }) => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [inputValues, setInputValues] = useState({});
-    const [header, setHeader] = useState(null);
-    useEffect(() => {
-      const fetchData = async () => {
-        const response = await fetch("http://43.204.74.225:8080/");
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const jsonData = await response.json();
-        setHeader(jsonData);
-      };
+  const [header, setHeader] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://43.204.74.225:8080/");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const jsonData = await response.json();
+      setHeader(jsonData);
+    };
 
-      fetchData();
-    }, []);
+    fetchData();
+  }, []);
   useEffect(() => {
     if (
       userData &&
@@ -64,35 +65,35 @@ const Agent = ({ userData, onLogout }) => {
     });
   };
 
-const handleSave = () => {
-const dataToSend = {
-  cp_id: userData?.chargerDetails?.cp_id,
-  test_cases: header?.test_case.map((headerItem) => ({
-    name: headerItem.name,
-    successRatio: selectedOptions[headerItem.name],
-    reason:
-      selectedOptions[headerItem.name] !== "Success on first time"
-        ? inputValues[headerItem.name]
-        : "",
-  })),
-};
+  const handleSave = () => {
+    const dataToSend = {
+      cp_id: userData?.chargerDetails?.cp_id,
+      test_cases: header?.test_case.map((headerItem) => ({
+        name: headerItem.name,
+        successRatio: selectedOptions[headerItem.name],
+        reason:
+          selectedOptions[headerItem.name] !== "Success on first time"
+            ? inputValues[headerItem.name]
+            : "",
+      })),
+    };
 
-
-  fetch("http://43.204.74.225:8080/status", {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(dataToSend),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
+    console.log("dataToSend", dataToSend);
+    fetch("http://43.204.74.225:8080/status", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToSend),
     })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-};
+      .then((response) => response.json())
+      .then((data) => {
+        toast.success("Testcase Saved Successfully");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   const createOptionButtons = (testCaseName) => {
     const options = [
@@ -114,9 +115,7 @@ const dataToSend = {
       <button
         key={index}
         className={`option-button ${
-          selectedOptions[testCaseName] === opt.option
-            ? opt.className 
-            : ""
+          selectedOptions[testCaseName] === opt.option ? opt.className : ""
         }`}
         onClick={() => handleOptionSelect(testCaseName, opt.option)}
       >
@@ -127,6 +126,8 @@ const dataToSend = {
 
   return (
     <div>
+      <ToastContainer />
+
       <header className="App-header">
         <img src={Group} alt="Logo 2" />
         <img src={Irislogo} alt="Logo 1" />

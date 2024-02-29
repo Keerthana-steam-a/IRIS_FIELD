@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
 import Irislogo from "./assets/Irislogo.svg";
 import Group from "./assets/Group.svg";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Add = ({ userData }) => {
   const [data, setData] = useState(null);
@@ -66,6 +68,8 @@ const navigate = useNavigate();
       );
       if (!response.ok) {
         throw new Error("Failed to delete test case");
+      }else{
+              toast.success("Test case deleted successfully");
       }
       const newData = { ...data };
       const updatedTestCases = newData.test_case.filter(
@@ -74,7 +78,7 @@ const navigate = useNavigate();
       newData.test_case = updatedTestCases;
       setData(newData);
     } catch (error) {
-      console.error("Error deleting test case:", error);
+      toast.error("Error deleting test case");
     }
   };
 
@@ -90,6 +94,8 @@ const navigate = useNavigate();
 
       if (!response.ok) {
         throw new Error("Failed to add new test case");
+      } else {
+        toast.success("Test case added successfully");
       }
       const newData = { ...data };
       newData.test_case.push({ name: newTestCase });
@@ -99,10 +105,15 @@ const navigate = useNavigate();
       console.error("Error adding new test case:", error);
     }
   };
-
+  const handleSave = () => {
+    console.log("saved")
+    toast.success("Saved successfully");
+  };
   console.log("data", data);
   return (
     <div>
+            <ToastContainer />
+
       <header className="App-header">
         <img src={Group} alt="Logo 2" />
         <img src={Irislogo} alt="Logo 1" />
@@ -152,7 +163,12 @@ const navigate = useNavigate();
                     />
                   </td>
                   <td>
-                    <button style={{ marginLeft: "10px" }}>Save</button>
+                    <button
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => handleSave()}
+                    >
+                      Save
+                    </button>
                     <button
                       style={{ marginLeft: "10px" }}
                       onClick={() => handleDelete(testCase.name)}
