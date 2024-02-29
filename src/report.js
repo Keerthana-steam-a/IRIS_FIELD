@@ -11,7 +11,7 @@ const Report = ({ userData, onLogout }) => {
     const [header, setHeader] = useState(null);
     useEffect(() => {
       const fetchData = async () => {
-        const response = await fetch("http://localhost:8080/");
+        const response = await fetch("http://43.204.74.225:3000/");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
