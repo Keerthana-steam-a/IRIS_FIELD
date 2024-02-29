@@ -155,6 +155,7 @@ navigate("/add");  };
           className="report-div"
           style={{
             overflowX: "auto",
+            overflowY: "auto",
             position: "relative",
             top: 0,
             right: 0,

@@ -261,11 +261,13 @@ td.sticky-cell {
   padding: 5px; /* Adjust padding for smaller screens */
 }
 table.report {
-  border-collapse:separate;
+  border-collapse: collapse;
+  white-space: nowrap;
 }
+
 @media screen and (max-width: 767px) {
   table.report {
-    border-collapse: separate;
+    border-collapse: collapse;
     white-space: inherit;
   }
 }
@@ -319,5 +321,5 @@ table.report {
   background-color: #f1f8fe;}
 
 .success-ratio-container{
-  width:165px
+  width:200px;
 }
