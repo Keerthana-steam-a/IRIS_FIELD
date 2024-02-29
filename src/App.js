@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,16 +15,29 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
 
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+    const storedIsLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (storedIsLoggedIn && storedUserData) {
+      setIsLoggedIn(true);
+      setUserData(JSON.parse(storedUserData));
+    }
+  }, []);
+
   const handleLogin = (data) => {
     setIsLoggedIn(true);
     setUserData(data);
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userData", JSON.stringify(data));
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserData(null);
-   window.location.href = "/";
-
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userData");
+    window.location.href = "/";
   };
 
   return (
@@ -50,8 +63,16 @@ function App() {
             )
           }
         />
-       
-        <Route path="/add" element={ isLoggedIn &&<Add userData={userData} />} />
+        <Route
+          path="/add"
+          element={
+            isLoggedIn ? (
+              <Add userData={userData} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
       </Routes>
     </Router>
   );

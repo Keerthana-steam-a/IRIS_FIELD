@@ -235,7 +235,7 @@ navigate("/add");  };
                                   ? "#FF4E4E"
                                   : matchingTestCase?.successRatio === "e"
                                   ? "#A9A9A9"
-                                  : "#46D766",
+                                  : "",
                             }}
                           >
                             <div className="success-ratio-container">
@@ -252,7 +252,6 @@ navigate("/add");  };
                                     : matchingTestCase?.successRatio === "e"
                                     ? "Not Applicable"
                                     : "--"}
-                                  {/* Tooltip icon */}
                                   <div
                                     className="tooltip-icon"
                                     onMouseEnter={() =>
@@ -265,7 +264,6 @@ navigate("/add");  };
                                     onMouseLeave={handleTooltipLeave}
                                   >
                                     <AiOutlineInfoCircle />
-                                    {/* Tooltip content */}
                                     {showTooltip &&
                                       currentSite ===
                                         chargerDetail.location_name &&
