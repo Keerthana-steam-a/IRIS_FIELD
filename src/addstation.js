@@ -51,7 +51,7 @@ useEffect(() => {
   const handleAdd = async () => {
     try {
       // Add station
-      const stationResponse = await fetch("http://localhost:8080/stations", {
+      const stationResponse = await fetch("http://43.204.74.225:8080/stations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ useEffect(() => {
       const { stationId } = await stationResponse.json();
       setData([...data, { name: newStationName }]);
       // Add charger
-      const chargerResponse = await fetch("http://localhost:8080/chargers", {
+      const chargerResponse = await fetch("http://43.204.74.225:8080/chargers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ useEffect(() => {
         throw new Error("Failed to add new charger");
       }
 
-      const userResponse = await fetch("http://localhost:8080/users", {
+      const userResponse = await fetch("http://43.204.74.225:8080/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -125,7 +125,7 @@ const [stationId,setStationId]=useState([]);
 
 const fetchUserList = async (stationId) => {
   try {
-    const response = await fetch("http://localhost:8080/userlist");
+    const response = await fetch("http://43.204.74.225:8080/userlist");
     if (!response.ok) {
       throw new Error("Failed to fetch user list");
     }
@@ -145,7 +145,7 @@ const handleAssign = async () => {
     if (!selectedLead || !selectedStationId) {
       throw new Error("Invalid selection");
     }
-        const response = await fetch(`http://localhost:8080/stationassign`, {
+        const response = await fetch(`http://43.204.74.225:8080/stationassign`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

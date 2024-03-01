@@ -21,7 +21,7 @@ const navigate = useNavigate();
   };
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:8080/");
+      const response = await fetch("http://43.204.74.225:8080/");
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -34,7 +34,7 @@ const navigate = useNavigate();
   const handleEdit = async (index, newName) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/test_cases/${index}`,
+        `http://43.204.74.225:8080/test_cases/${index}`,
         {
           method: "PATCH",
           headers: {
@@ -58,7 +58,7 @@ const navigate = useNavigate();
   const handleDelete = async (nameToDelete) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/test_cases/${nameToDelete}`,
+        `http://43.204.74.225:8080/test_cases/${nameToDelete}`,
         {
           method: "DELETE",
           headers: {
@@ -84,7 +84,7 @@ const navigate = useNavigate();
 
   const handleAdd = async () => {
     try {
-      const response = await fetch("http://localhost:8080/test_cases", {
+      const response = await fetch("http://43.204.74.225:8080/test_cases", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
