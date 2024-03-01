@@ -24,24 +24,29 @@ const AddStation = ({ userData }) => {
     }
   };
   console.log("data", data);
-  useEffect(() => {
-    const fetchData = () => {
-      const updatedData = userData.chargerDetails.map((chargerDetail) => ({
-        ...chargerDetail,
-        chargers: chargerDetail.chargers.map((charger) => ({
-          ...charger,
-          name: chargerDetail.stationDetails.location_name,
-        })),
-      }));
 
-      const names = updatedData.map((chargerDetail) => ({
-        name: chargerDetail.chargers.map((charger) => charger.name),
-      }));
+useEffect(() => {
+  const fetchData = () => {
+    const updatedData = userData.chargerDetails.map((chargerDetail) => ({
+      ...chargerDetail,
+      chargers: chargerDetail.chargers.map((charger) => ({
+        ...charger,
+        // Add the station_id from stationDetails to the charger object
+        station_id: chargerDetail.stationDetails.id,
+        name: chargerDetail.stationDetails.location_name,
+      })),
+    }));
 
-      setData(names);
-    };
-    fetchData();
-  }, []);
+    const names = updatedData.map((chargerDetail) => ({
+      name: chargerDetail.chargers.map((charger) => charger.name),
+      station_id: chargerDetail.chargers.map((charger) => charger.station_id), // Add the station_id to the names object
+    }));
+
+    setData(names);
+  };
+  fetchData();
+}, []);
+
 
   const handleAdd = async () => {
     try {
@@ -113,25 +118,88 @@ const AddStation = ({ userData }) => {
       console.error("Error deleting test case:", error);
     }
   };
+  const [leadNames, setLeadNames] = useState([]);
+  console.log("leadNames", leadNames);
   const [isAssignPopupOpen, setIsAssignPopupOpen] = useState(false);
+const [stationId,setStationId]=useState([]);
 
-const AssignPopup = ({ isOpen, onRequestClose }) => {
-  return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Assign Popup"
-      className="custom-modal"
-    >
-      <h2>Assign Station</h2>
-      <p>Are you sure you want to assign this station?</p>
-      <button className="modal-button" onClick={onRequestClose}>
-        Cancel
-      </button>
-      <button style={{marginLeft:"10px"}} className="modal-button">Assign</button>
-    </Modal>
-  );
+const fetchUserList = async (stationId) => {
+  try {
+    const response = await fetch("http://localhost:8080/userlist");
+    if (!response.ok) {
+      throw new Error("Failed to fetch user list");
+    }
+    const data = await response.json();
+    setLeadNames(data.user);
+    setIsAssignPopupOpen(true);
+    setStationId(stationId);
+      console.log("stationId", stationId);
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
 };
+const handleAssign = async () => {
+  try {
+    const selectedLead = document.querySelector(".lead-select").value;
+    const selectedStationId = stationId
+    if (!selectedLead || !selectedStationId) {
+      throw new Error("Invalid selection");
+    }
+        const response = await fetch(`http://localhost:8080/stationassign`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: selectedLead,
+        stationId:stationId
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to assign user to station");
+    }
+    toast.success("User assigned to station successfully");
+    setIsAssignPopupOpen(false); 
+  } catch (error) {
+    toast.error("Failed to assign user to station");
+  }
+};
+
+  const AssignPopup = ({ isOpen, onRequestClose }) => {
+    return (
+      <Modal
+        isOpen={isAssignPopupOpen}
+        onRequestClose={onRequestClose}
+        contentLabel="Assign Popup"
+        className="custom-modal"
+      >
+        <h2>Assign Station</h2>
+        <p>Select Lead to assign</p>
+        <div>
+          <select className="lead-select">
+            {leadNames.map((lead, index) => (
+              <option key={index} value={lead.username}>
+                {lead.username}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <button className="modal-button" onClick={handleAssign}>
+            Assign
+          </button>
+          <button
+            style={{ marginLeft: "10px" }}
+            className="modal-button"
+            onClick={onRequestClose}
+          >
+            Cancel
+          </button>
+        </div>
+      </Modal>
+    );
+  };
 
   return (
     <div>
@@ -215,11 +283,12 @@ const AssignPopup = ({ isOpen, onRequestClose }) => {
                     <td>
                       <button
                         style={{ marginLeft: "10px" }}
-                        onClick={() => setIsAssignPopupOpen(true)}
+                        onClick={() =>
+                          fetchUserList(testCase.station_id[0])
+                        }
                       >
                         Assign
                       </button>
-
                       <button
                         style={{ marginLeft: "10px" }}
                         onClick={() => handleDelete(testCase.name)}

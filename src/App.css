@@ -348,17 +348,22 @@ label {
 .download-button {
   margin-bottom: 10px;
 }
+
 .custom-modal {
-  background-color: #f2f2f2;
-  width: 400px;
+    background-color: #f2f2f2;
+  width: 300px;
   margin: auto; 
   padding: 20px;
   margin-top: 100px;
   border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
-
 .modal-button{
-    margin-top: 10px;
+  margin-top: 10px;
   height: 34px;
   width: 100px;
   padding: 10px;
@@ -367,4 +372,10 @@ label {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.lead-select{
+  width: 200px;
+  height: 30px;
+  border-radius: 10px;
 }
