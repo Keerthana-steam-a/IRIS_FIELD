@@ -10,7 +10,7 @@ const Agent = ({ userData, onLogout }) => {
   const [header, setHeader] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://43.204.74.225:8080/");
+      const response = await fetch("http://localhost:8080/");
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -79,7 +79,7 @@ const Agent = ({ userData, onLogout }) => {
     };
 
     console.log("dataToSend", dataToSend);
-    fetch("http://43.204.74.225:8080/status", {
+    fetch("http://localhost:8080/status", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

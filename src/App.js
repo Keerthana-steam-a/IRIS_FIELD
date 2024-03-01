@@ -10,6 +10,7 @@ import Login from "./login";
 import Report from "./report";
 import Agent from "./agent";
 import Add from "./add";
+import AddStation from "./addstation";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -68,6 +69,16 @@ function App() {
           element={
             isLoggedIn ? (
               <Add userData={userData} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
+        <Route
+          path="/addstation"
+          element={
+            isLoggedIn ? (
+              <AddStation userData={userData} />
             ) : (
               <Navigate to="/" replace />
             )
