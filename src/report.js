@@ -327,6 +327,7 @@ const Report = ({ userData, onLogout }) => {
     };
 
     fetchData();
+
   }, []);
 
   const handleTooltipHover = (site, successRatio, reason) => {

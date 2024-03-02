@@ -24,8 +24,6 @@ const AddStation = ({ userData }) => {
     }
   };
   console.log("data", data);
-
-useEffect(() => {
   const fetchData = () => {
     const updatedData = userData.chargerDetails.map((chargerDetail) => ({
       ...chargerDetail,
@@ -44,6 +42,7 @@ useEffect(() => {
 
     setData(names);
   };
+useEffect(() => {
   fetchData();
 }, []);
 
@@ -68,6 +67,7 @@ useEffect(() => {
 
       const { stationId } = await stationResponse.json();
       setData([...data, { name: newStationName }]);
+       fetchData();
       // Add charger
       const chargerResponse = await fetch("http://43.204.74.225:8080/chargers", {
         method: "POST",
