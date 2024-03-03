@@ -503,6 +503,8 @@ const downloadExcel = () => {
                           position: "sticky",
                           top: "0",
                           zIndex: "1",
+                          whiteSpace: "nowrap",
+
                         }}
                       >
                         {testCase.name}

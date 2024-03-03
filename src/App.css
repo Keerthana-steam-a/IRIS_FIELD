@@ -262,7 +262,7 @@ td.sticky-cell {
 }
 table.report {
   border-collapse: collapse;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 @media screen and (max-width: 767px) {
