@@ -51,10 +51,11 @@ function App() {
       };
 
       // Fetch data initially
-      fetchData();
-
-      // Fetch data every 10 seconds
-      intervalId = setInterval(fetchData, 10000);
+     
+  if (isLoggedIn && userData?.userDetails?.user_type !== "agent") {
+    fetchData(); // Initial fetch
+    intervalId = setInterval(fetchData, 10000); // Fetch every 10 seconds
+  }
     }
 
     return () => clearInterval(intervalId); // Cleanup function to clear interval when component unmounts or user logs out
