@@ -470,9 +470,10 @@ const downloadExcel = () => {
             position: "relative",
             top: 0,
             right: 0,
+            height:"100vh"
           }}
         >
-          <div style={{ overflowX: "auto", overflowY: "auto" }}>
+          <div style={{ overflowX: "visible", overflowY: "visible", }}>
             <table className="report">
               <thead>
                 <tr
